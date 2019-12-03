@@ -34,10 +34,8 @@ public class Logger {
 	}
 	
 	public String getTime() {
-		String timestamp = Long.toString(System.currentTimeMillis());
-		
-		// MUST add the whitespace
-		
-		return timestamp;
+		return Long.toString(System.currentTimeMillis());
 	}
+	
+	
 }

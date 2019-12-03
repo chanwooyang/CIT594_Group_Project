@@ -2,6 +2,8 @@ package edu.upenn.cit594.ui;
 
 import java.util.Scanner;
 
+import edu.upenn.cit594.logging.Logger;
+
 public class UserInterface {
 	
 	protected PopulationProcessor popProc;
@@ -30,26 +32,41 @@ public class UserInterface {
 		System.out.println("6: average parking fine per average market value in all ZIP codes with data");
 		
 		Scanner userInput = new Scanner(System.in);
-		// NEED TO TEST FOR NON-INT INPUT
-		int actionNumber = userInput.nextInt();
-		while (actionNumber < 0 || actionNumber > NUM_OF_ACTIONS) {
-			System.out.println("Invalid response. Please enter an integer between 0 - 6");
+		int actionNumber = -100;
+		while (true) {
+			while (!userInput.hasNextInt()) {
+				System.out.println("You have entered a non-integer value. Please enter a number between 0 - 6");
+				userInput.next();
+			}
 			actionNumber = userInput.nextInt();
-		}
+			if (actionNumber >= 0 && actionNumber < NUM_OF_ACTIONS) {
+				break;
+			}
+			else {
+				System.out.println("Not an appropriate integer. Please enter an integer between 0 - 6");
+				userInput.next();
+			}
+		}	
 		
-		// ADD IN THE LOGGING STEP
+		
+		Logger lg = Logger.getInstance();
+		lg.log(lg.getTime() + " "  + actionNumber);
 		
 		if (actionNumber == 0) {
-			break;
-			// DOES THIS EXIT THE PROGRAM?
+			System.exit(0);
 		}
 		if (actionNumber == 1) { popProc.totalPopulation(); }
 		if (actionNumber == 2) { pvProc.totalFinesPerCap(); }
-		if (actionNumber == 3) { propProc.averageMarketValue(); }
-		if (actionNumber == 4) { propProc.averageTotalLivableArea(); }
-		if (actionNumber == 5) { propProc.marketValuePerCap(); }
-		if (actionNumber == 6) { pvProc.averageFinePerMarketValue(); }
+		if (actionNumber > 2 && actionNumber < 7 ) {
+			System.out.println("Please enter a ZIP code");
+			String userZipCode = userInput.nextLine();
+		}
 		
+		if (actionNumber == 3) { propProc.averageMarketValue(userZipCode); }
+		if (actionNumber == 4) { propProc.averageTotalLivableArea(userZipCode); }
+		if (actionNumber == 5) { propProc.marketValuePerCap(userZipCode); }
+		if (actionNumber == 6) { pvProc.averageFinePerMarketValue(userZipCode); }
+		userInput.close();
 		
 	}
 	
