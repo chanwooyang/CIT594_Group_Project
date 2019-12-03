@@ -86,9 +86,9 @@ public class Main {
 			rd = new JSONParkingViolationReader(parkVioFileName);
 		}
 		PropertyReader propCSV = new PropertyReader (propValFileName);
-		PopulationReader popText = new PopulationReader (popFileName);
+		ZipCodeReader popText = new ZipCodeReader (popFileName);
 
-		PopulationProcessor popProc = new PopulationProcessor(popText);
+		ZipCodeProcessor popProc = new ZipCodeProcessor(popText);
 		PropertyProcessor propProc = new PropertyProcessor(propCSV);
 		ParkingViolationProcessor pvProc = new ParkingViolationProcessor(rd);
 		UserInterface ui = new UserInterface(popProc, propProc, pvProc);

@@ -6,14 +6,14 @@ import edu.upenn.cit594.logging.Logger;
 
 public class UserInterface {
 	
-	protected PopulationProcessor popProc;
+	protected ZipCodeProcessor zcProc;
 	protected PropertyProcessor propProc;
 	protected ParkingViolationProcessor pvProc;
 	private final int NUM_OF_ACTIONS = 6;
 	
-	public UserInterface (PopulationProcessor popProc, PropertyProcessor propProc, 
+	public UserInterface (ZipCodeProcessor zpProc, PropertyProcessor propProc, 
 			ParkingViolationProcessor pvProc) {
-		this.popProc = popProc;
+		this.zpProc = zpProc;
 		this.propProc = propProc;
 		this.pvProc = pvProc;
 	}
@@ -55,7 +55,7 @@ public class UserInterface {
 		if (actionNumber == 0) {
 			System.exit(0);
 		}
-		if (actionNumber == 1) { popProc.totalPopulation(); }
+		if (actionNumber == 1) { zpProc.totalPopulation(); }
 		if (actionNumber == 2) { pvProc.totalFinesPerCap(); }
 		if (actionNumber > 2 && actionNumber < 7 ) {
 			System.out.println("Please enter a ZIP code");
