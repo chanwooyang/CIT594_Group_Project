@@ -28,18 +28,18 @@ public class CSVParkingViolationReader extends ParkingViolationReader {
 
 				try {
 					// Check if fine, license plate, zip code data are missing
-					if (tokens[1].strip().isEmpty() || tokens[4].strip().isEmpty() || tokens[6].strip().isEmpty()) {
+					if (tokens[1].isEmpty() || tokens[4].isEmpty() || tokens[6].isEmpty()) {
 						continue;
 					}
 
-//					String timeStamp = tokens[0].strip();
-					int fineUSD = Integer.parseInt(tokens[1].strip());
-//					String violDesc = tokens[2].strip();
-//					int vehID = Integer.parseInt(tokens[3].strip());
-					String licensePlate = tokens[4].strip();
-//					int violID = Integer.parseInt(tokens[5].strip());
+//					String timeStamp = tokens[0];
+					int fineUSD = Integer.parseInt(tokens[1]);
+//					String violDesc = tokens[2];
+//					int vehID = Integer.parseInt(tokens[3]);
+					String licensePlate = tokens[4];
+//					int violID = Integer.parseInt(tokens[5]);
 
-					int zipCode = Integer.parseInt(tokens[6].strip());
+					int zipCode = Integer.parseInt(tokens[6]);
 
 					ParkingViolation currentTicket = new ParkingViolation(fineUSD, licensePlate, zipCode);
 

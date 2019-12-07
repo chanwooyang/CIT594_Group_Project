@@ -30,8 +30,8 @@ public class ZipCodeReader {
 
 				try {
 
-					int zipCode = Integer.parseInt(tokens[0].strip());
-					int population = Integer.parseInt(tokens[1].strip());
+					int zipCode = Integer.parseInt(tokens[0]);
+					int population = Integer.parseInt(tokens[1]);
 
 					popPerZip.put(zipCode, population);
 

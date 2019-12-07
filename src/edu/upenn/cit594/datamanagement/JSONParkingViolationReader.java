@@ -29,9 +29,9 @@ public class JSONParkingViolationReader extends ParkingViolationReader{
 			while(iter.hasNext()) {
 				JSONObject ticket = (JSONObject) iter.next();
 				
-				String zipCodeStr = ticket.get("zip_code").toString().strip();
-				String fineStr = ticket.get("fine").toString().strip();
-				String licensePlate = ticket.get("state").toString().strip();
+				String zipCodeStr = ticket.get("zip_code").toString();
+				String fineStr = ticket.get("fine").toString();
+				String licensePlate = ticket.get("state").toString();
 				
 				if (zipCodeStr.isEmpty() || fineStr.isEmpty() || licensePlate.isEmpty()) {
 					continue;

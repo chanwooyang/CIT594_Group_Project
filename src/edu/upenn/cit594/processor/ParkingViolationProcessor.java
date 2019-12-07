@@ -141,14 +141,14 @@ public class ParkingViolationProcessor {
 		
 	}
 
-	public static void main(String[] args) {
-		ParkingViolationProcessor p = new ParkingViolationProcessor("csv", "parking.csv");
-		List<ParkingViolation> pl = new ArrayList<ParkingViolation>();
-		ZipCodeProcessor zp = new ZipCodeProcessor("population.txt");
-		Map<Integer, Integer> zl = new HashMap<Integer, Integer>();
-		zl = zp.process();
-		pl = p.getParkingViolationList();
-		p.getTotalFinesPerCapita(zl);
-	}
+//	public static void main(String[] args) {
+//		ParkingViolationProcessor p = new ParkingViolationProcessor("csv", "parking.csv");
+//		List<ParkingViolation> pl = new ArrayList<ParkingViolation>();
+//		ZipCodeProcessor zp = new ZipCodeProcessor("population.txt");
+//		Map<Integer, Integer> zl = new HashMap<Integer, Integer>();
+//		zl = zp.process();
+//		pl = p.getParkingViolationList();
+//		p.getTotalFinesPerCapita(zl);
+//	}
 
 }

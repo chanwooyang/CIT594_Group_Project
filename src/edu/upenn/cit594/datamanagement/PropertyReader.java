@@ -30,11 +30,11 @@ public class PropertyReader {
 			// find market_value, total_livable_area, zip_code indices
 			int mvIndex = 0, tlaIndex = 0, zcIndex = 0;
 			for (int i = 0; i < titleTokens.length; i++) {
-				if (titleTokens[i].strip().equals("market_value")) {
+				if (titleTokens[i].equals("market_value")) {
 					mvIndex = i;
-				} else if (titleTokens[i].strip().equals("total_livable_area")) {
+				} else if (titleTokens[i].equals("total_livable_area")) {
 					tlaIndex = i;
-				} else if (titleTokens[i].strip().equals("zip_code")) {
+				} else if (titleTokens[i].equals("zip_code")) {
 					zcIndex = i;
 				}
 			}
@@ -46,14 +46,14 @@ public class PropertyReader {
 
 				try {
 					// Check if any of 3 data fields is missing
-					if (tokens[mvIndex].strip().isEmpty() || tokens[tlaIndex].strip().isEmpty()
-							|| tokens[zcIndex].strip().isEmpty()) {
+					if (tokens[mvIndex].isEmpty() || tokens[tlaIndex].isEmpty()
+							|| tokens[zcIndex].isEmpty()) {
 						continue;
 					}
 
-					double marketValue = Double.parseDouble(tokens[mvIndex].strip());
-					double totalLivableArea = Double.parseDouble(tokens[tlaIndex].strip());
-					int zipCode = Integer.parseInt(tokens[zcIndex].strip().substring(0, 4));
+					double marketValue = Double.parseDouble(tokens[mvIndex]);
+					double totalLivableArea = Double.parseDouble(tokens[tlaIndex]);
+					int zipCode = Integer.parseInt(tokens[zcIndex].substring(0, 4));
 
 					Property property = new Property(zipCode, marketValue, totalLivableArea);
 
