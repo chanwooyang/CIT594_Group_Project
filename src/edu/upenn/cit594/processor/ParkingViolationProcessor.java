@@ -7,13 +7,18 @@ import edu.upenn.cit594.data.*;
 public class ParkingViolationProcessor {
 
 	private ParkingViolationProcesorAbstract processor;
-	private Map<Integer, Double> finePerCapitaMemo; // for memoization
+	private String fileName;
+	// Memoization for #2: HashMap<fileName, totalFinePerCapita>
+	private HashMap<String, Map<Integer, Double>> totalFinePerCapitaMemo = new HashMap<>();
+	private HashMap<String, Map<Integer, Double>> finePerZipMemo = new HashMap<>();
 
 	public ParkingViolationProcessor(String fileFormat, String fileName) {
 		this.processor = getProcessor(fileFormat, fileName);
 	}
 
 	private ParkingViolationProcesorAbstract getProcessor(String fileFormat, String fileName) {
+		this.fileName = fileName;
+
 		if (fileFormat.equals("csv")) {
 			return new CSVParkingViolationProcessor(fileName);
 		} else if (fileFormat.equals("json")) {
@@ -31,32 +36,12 @@ public class ParkingViolationProcessor {
 		return tickets;
 	}
 
-	/**
-	 * #2 Total Fines Per Capita
-	 * @param popZipMap - population-ZipCode Mapping data
-	 */
-	public void getTotalFinesPerCapita(Map<Integer, Integer> popZipMap) {
-		Map<Integer, Double> finePerCapita = new HashMap<>();
-		
-		if (false) {
-			
-		} else {
-			finePerCapita = this.calculateTotalFinesPerCapita(popZipMap);
-		}
-		
-		for (Integer zip : finePerCapita.keySet()) {
-			System.out.format(zip + " %.4f\n", finePerCapita.get(zip));
-		}
-	}
-	
-	private Map<Integer, Double> calculateTotalFinesPerCapita(Map<Integer, Integer> popZipMap) {
-
-		HashMap<Integer, Double> finePerZip = new HashMap<Integer, Double>();
-		HashMap<Integer, Double> finePerCapita = new HashMap<Integer, Double>();
+	private Map<Integer, Double> calculatetoalFinesPerZip() {
+		Map<Integer, Double> finePerZip = new HashMap<Integer, Double>();
 
 		List<ParkingViolation> parkingViolations = new ArrayList<ParkingViolation>();
 		parkingViolations = this.getParkingViolationList();
-
+		
 		for (ParkingViolation ticket : parkingViolations) {
 			int currentZip = ticket.getZipCode();
 			int currentFine = ticket.getFineUSD();
@@ -74,8 +59,26 @@ public class ParkingViolationProcessor {
 				double accumFine = currentFine;
 				finePerZip.put(currentZip, accumFine);
 			}
-
 		}
+		
+		return finePerZip;
+		
+	}
+
+	private Map<Integer, Double> calculateTotalFinesPerCapita(Map<Integer, Integer> popZipMap) {
+
+		Map<Integer, Double> finePerZip = new HashMap<Integer, Double>();
+		Map<Integer, Double> finePerCapita = new HashMap<Integer, Double>();
+
+		// memoization
+		String fileName = this.fileName.split("\\.")[0];
+		if (finePerZipMemo.containsKey(fileName)) {
+			finePerZip = finePerZipMemo.get(fileName);
+		} else {
+			finePerZip = this.calculatetoalFinesPerZip();
+			finePerZipMemo.put(fileName, finePerZip);
+		}
+		
 
 		for (Integer zip : popZipMap.keySet()) {
 			if (finePerZip.containsKey(zip)) {
@@ -89,9 +92,52 @@ public class ParkingViolationProcessor {
 				finePerCapita.put(zip, avgFine);
 			}
 		}
-		
 		return finePerCapita;
+	}
+	
+	/**
+	 * #2 Total Fines Per Capita
+	 * 
+	 * @param popZipMap - population-ZipCode Mapping data
+	 */
+	public void getTotalFinesPerCapita(Map<Integer, Integer> popZipMap) {
+		Map<Integer, Double> finePerCapita = new HashMap<>();
+		String fileName = this.fileName.split("\\.")[0];
 
+		// memoization
+		if (totalFinePerCapitaMemo.containsKey(fileName)) {
+			finePerCapita = totalFinePerCapitaMemo.get(fileName);
+		} else {
+			finePerCapita = this.calculateTotalFinesPerCapita(popZipMap);
+			totalFinePerCapitaMemo.put(fileName, finePerCapita);
+		}
+
+		for (Integer zip : finePerCapita.keySet()) {
+			System.out.format(zip + " %.4f\n", finePerCapita.get(zip));
+		}
+	}
+
+	/**
+	 * #6 Additional Feature
+	 * 
+	 * @param popZipMap
+	 * @return
+	 */
+	public double getTotalFineToAvgMarketValuePerZip(Map<Integer, Integer> popZipMap) {
+		Map<Integer, Double> finePerZip = new HashMap<>();
+		String fileName = this.fileName.split("\\.")[0];
+
+		// memoization
+		if (finePerZipMemo.containsKey(fileName)) {
+			finePerZip = finePerZipMemo.get(fileName);
+		} else {
+			finePerZip = this.calculatetoalFinesPerZip();
+			finePerZipMemo.put(fileName, finePerZip);
+		}
+		
+		//TODO: implement rest of algorithms
+		
+		return 0.0;
 		
 	}
 
