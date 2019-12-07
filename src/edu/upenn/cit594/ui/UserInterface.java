@@ -2,7 +2,11 @@ package edu.upenn.cit594.ui;
 
 import java.util.Scanner;
 
+import javax.xml.bind.ParseConversionEvent;
+
+import edu.upenn.cit594.datamanagement.ZipCodeReader;
 import edu.upenn.cit594.logging.Logger;
+import edu.upenn.cit594.processor.*;
 
 public class UserInterface {
 	
@@ -11,9 +15,8 @@ public class UserInterface {
 	protected ParkingViolationProcessor pvProc;
 	private final int NUM_OF_ACTIONS = 6;
 	
-	public UserInterface (ZipCodeProcessor zpProc, PropertyProcessor propProc, 
-			ParkingViolationProcessor pvProc) {
-		this.zpProc = zpProc;
+	public UserInterface (ZipCodeProcessor zcProc, PropertyProcessor propProc, ParkingViolationProcessor pvProc) {
+		this.zcProc = zcProc;
 		this.propProc = propProc;
 		this.pvProc = pvProc;
 	}
@@ -55,11 +58,17 @@ public class UserInterface {
 		if (actionNumber == 0) {
 			System.exit(0);
 		}
-		if (actionNumber == 1) { zpProc.totalPopulation(); }
-		if (actionNumber == 2) { pvProc.totalFinesPerCap(); }
-		if (actionNumber > 2 && actionNumber < 7 ) {
+		if (actionNumber == 1) { System.out.println(zcProc.totalPopulation()); }
+		if (actionNumber == 2) { pvProc.getTotalFinesPerCapita(); }
+		else {
 			System.out.println("Please enter a ZIP code");
-			String userZipCode = userInput.nextLine();
+			String userString = userInput.nextLine();
+			try {
+				int zipCode = Integer.parseInt(userString);
+			}
+			catch (NumberFormatException nfe) {
+				int zipCode = 0;
+			}
 		}
 		
 		if (actionNumber == 3) { propProc.averageMarketValue(userZipCode); }

@@ -13,7 +13,9 @@ public class ZipCodeProcessor {
 		allZipCodes = (HashMap<Integer, Integer>) zcReader.read();
 	}
 	
-//	public int totalPopulation() {
-//		
-//	}
+	public int totalPopulation() {
+		// to do
+		return -5;
+	}
+	
 }
