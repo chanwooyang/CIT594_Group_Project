@@ -50,14 +50,17 @@ public class JSONParkingViolationReader extends ParkingViolationReader{
 
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("ParkingViolation file: \"" + fileName + "\" does not exist. Terminating Program...");
+			System.exit(0);
+		} catch (SecurityException e) {
+			System.out.println("No permission to the ParkingViolation file: \"" + fileName + "\". Terminating Program...");
+			System.exit(0);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("JSON IO Error. Terminating Program...");
+			System.exit(0);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("JSON Parse Error. Terminating Program...");
+			System.exit(0);
 		}
 		
 		return null;

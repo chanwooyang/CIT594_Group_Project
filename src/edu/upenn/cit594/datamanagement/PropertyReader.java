@@ -69,8 +69,11 @@ public class PropertyReader {
 			return propertyList;
 
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Property file: \"" + fileName + "\" does not exist. Terminating Program...");
+			System.exit(0);
+		} catch (SecurityException e) {
+			System.out.println("No permission to the Property file: \"" + fileName + "\". Terminating Program...");
+			System.exit(0);
 		}
 
 		return null;

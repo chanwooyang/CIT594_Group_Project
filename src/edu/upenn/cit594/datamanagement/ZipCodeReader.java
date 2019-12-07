@@ -45,8 +45,11 @@ public class ZipCodeReader {
 			return popPerZip;
 
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Population file: \"" + fileName + "\" does not exist. Terminating Program...");
+			System.exit(0);
+		} catch (SecurityException e) {
+			System.out.println("No permission to the Population file: \"" + fileName + "\". Terminating Program...");
+			System.exit(0);
 		}
 
 		return null;

@@ -56,9 +56,11 @@ public class CSVParkingViolationReader extends ParkingViolationReader {
 			return ticketList;
 
 		} catch (FileNotFoundException e) {
-			System.out.println("ParkingViolation csv file does not exist. Terminating Program...");
+			System.out.println("ParkingViolation file: \"" + fileName + "\" does not exist. Terminating Program...");
+			System.exit(0);
 		} catch (SecurityException e) {
-			System.out.println("No permission to the ParkingViolation csv file. Terminating Program...");
+			System.out.println("No permission to the ParkingViolation file: \"" + fileName + "\". Terminating Program...");
+			System.exit(0);
 		}
 
 		return null;
