@@ -6,3 +6,4 @@
 *.csv
 *.json
 *.txt
+*.DS_Store

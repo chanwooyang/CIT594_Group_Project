@@ -121,9 +121,11 @@ public class ParkingViolationProcessor {
 	 * @param popZipMap
 	 * @return
 	 */
-	public double getTotalFineToAvgMarketValuePerZip(Map<Integer, Integer> popZipMap) {
+	public TreeMap<Integer, Double> getTotalFineToAvgMarketValuePerZip(Map<Integer, Integer> popZipMap, PropertyProcessor pp) {
 		Map<Integer, Double> finePerZip = new TreeMap<>();
 		String fileName = this.fileName.split("\\.")[0];
+		TreeMap<Integer, Double> answerHM = new TreeMap<Integer, Double>();
+		
 
 		// memoization
 		if (finePerZipMemo.containsKey(fileName)) {
@@ -134,8 +136,19 @@ public class ParkingViolationProcessor {
 		}
 		
 		//TODO: implement rest of algorithms
+		TreeMap<Integer, Double> finePerCapTM = (TreeMap<Integer, Double>) getTotalFinesPerCapita(popZipMap);
 		
-		return 0.0;
+		for (Map.Entry<Integer, Double> entry : finePerCapTM.entrySet()) {
+			// use PropertyProcessor with ZIP Code to get the average Market Value for that ZIP Code
+			int zipCode = entry.getKey(); 
+			int avMV = pp.getAvMarketValue(zipCode);
+			double ratio = 0;
+			if (avMV != 0) {
+				ratio = entry.getValue() / avMV * 100000;
+			} 
+			answerHM.put(zipCode, ratio);
+		}
+		return answerHM;
 		
 	}
 
