@@ -68,7 +68,7 @@ public class ParkingViolationProcessor {
 	private Map<Integer, Double> calculateTotalFinesPerCapita(Map<Integer, Integer> popZipMap) {
 
 		Map<Integer, Double> finePerZip = new HashMap<Integer, Double>();
-		Map<Integer, Double> finePerCapita = new HashMap<Integer, Double>();
+		Map<Integer, Double> finePerCapita = new TreeMap<Integer, Double>();
 
 		// memoization
 		String fileName = this.fileName.split("\\.")[0];
@@ -101,7 +101,7 @@ public class ParkingViolationProcessor {
 	 * @param popZipMap - population-ZipCode Mapping data
 	 */
 	public Map<Integer, Double> getTotalFinesPerCapita(Map<Integer, Integer> popZipMap) {
-		Map<Integer, Double> finePerCapita = new HashMap<>();
+		Map<Integer, Double> finePerCapita = new TreeMap<>();
 		String fileName = this.fileName.split("\\.")[0];
 
 		// memoization
@@ -122,7 +122,7 @@ public class ParkingViolationProcessor {
 	 * @return
 	 */
 	public double getTotalFineToAvgMarketValuePerZip(Map<Integer, Integer> popZipMap) {
-		Map<Integer, Double> finePerZip = new HashMap<>();
+		Map<Integer, Double> finePerZip = new TreeMap<>();
 		String fileName = this.fileName.split("\\.")[0];
 
 		// memoization
@@ -140,17 +140,17 @@ public class ParkingViolationProcessor {
 	}
 
 	// main method below is for debugging/testing purpose
-//	public static void main(String[] args) {
-//		ParkingViolationProcessor p = new ParkingViolationProcessor("csv", "parking.csv");
-//		List<ParkingViolation> pl = new ArrayList<ParkingViolation>();
-//		ZipCodeProcessor zp = new ZipCodeProcessor("population.txt");
-//		Map<Integer, Integer> zl = new HashMap<Integer, Integer>();
-//		Map<Integer, Double> fpc = new HashMap<>();
-//		zl = zp.process();
-//		pl = p.getParkingViolationList();
-//		fpc = p.getTotalFinesPerCapita(zl);
-//		for (Integer zip : fpc.keySet()) {
-//			System.out.format(zip + " %.4f\n", fpc.get(zip));
-//		}
-//	}
+	public static void main(String[] args) {
+		ParkingViolationProcessor p = new ParkingViolationProcessor("csv", "parking.csv");
+		List<ParkingViolation> pl = new ArrayList<ParkingViolation>();
+		ZipCodeProcessor zp = new ZipCodeProcessor("population.txt");
+		Map<Integer, Integer> zl = new HashMap<Integer, Integer>();
+		Map<Integer, Double> fpc = new HashMap<>();
+		zl = zp.process();
+		pl = p.getParkingViolationList();
+		fpc = p.getTotalFinesPerCapita(zl);
+		for (Integer zip : fpc.keySet()) {
+			System.out.format(zip + " %.4f\n", fpc.get(zip));
+		}
+	}
 }
