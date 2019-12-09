@@ -1,16 +1,9 @@
 package edu.upenn.cit594.ui;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
-import javax.xml.bind.ParseConversionEvent;
-
-import edu.upenn.cit594.data.ParkingViolation;
-import edu.upenn.cit594.datamanagement.ZipCodeReader;
 import edu.upenn.cit594.logging.Logger;
 import edu.upenn.cit594.processor.*;
 
@@ -75,18 +68,6 @@ public class UserInterface {
 				continue;
 			}
 			
-//			ParkingViolationProcessor p = new ParkingViolationProcessor("csv", "parking.csv");
-//			List<ParkingViolation> pl = new ArrayList<ParkingViolation>();
-//			ZipCodeProcessor zp = new ZipCodeProcessor("population.txt");
-//			Map<Integer, Integer> zl = new HashMap<Integer, Integer>();
-//			Map<Integer, Double> fpc = new HashMap<>();
-//			zl = zp.process();
-//			pl = p.getParkingViolationList();
-//			fpc = p.getTotalFinesPerCapita(zl);
-//			for (Integer zip : fpc.keySet()) {
-//				System.out.format(zip + " %.4f\n", fpc.get(zip));
-//			}
-			
 			if (actionNumber == 2) {
 				HashMap<Integer, Integer> zipCodePopMap = (HashMap<Integer, Integer>) zcProc.process();
 				TreeMap<Integer, Double> finesTM = (TreeMap<Integer, Double>) pvProc.getTotalFinesPerCapita(zipCodePopMap);
@@ -96,11 +77,22 @@ public class UserInterface {
 				continue;
 			}
 			
+			if (actionNumber == 6) {
+				HashMap<Integer, Integer> zipCodePopMap = (HashMap<Integer, Integer>) zcProc.process();
+				TreeMap<Integer, Double> ratio6TM = (TreeMap<Integer, Double>) pvProc.getTotalFineToAvgMarketValuePerZip(zipCodePopMap, propProc);
+				for (Integer zip : ratio6TM.keySet()) {
+					System.out.format(zip + " %.4f\n", ratio6TM.get(zip));
+				}
+				continue;
+			}
+			
 			// all remaining actions need a ZIP code
 			System.out.println("Please enter a ZIP code:");
 			if (!userInput.hasNextInt()) {
 				// print 0 if not a valid ZIP code
 				System.out.println("0");
+				String input = userInput.next();
+				lg.log(lg.getTime() + " "  + input);
 				continue;
 			}
 			int userZipCode = userInput.nextInt();
@@ -118,14 +110,7 @@ public class UserInterface {
 				System.out.println(propProc.getTotalMarketValuePerCapita(userZipCode, zcProc));
 				continue;
 			}
-			if (actionNumber == 6) {
-				HashMap<Integer, Integer> zipCodePopMap = (HashMap<Integer, Integer>) zcProc.process();
-				TreeMap<Integer, Double> ratio6TM = (TreeMap<Integer, Double>) pvProc.getTotalFineToAvgMarketValuePerZip(zipCodePopMap, propProc);
-				for (Integer zip : ratio6TM.keySet()) {
-					System.out.format(zip + " %.4f\n", ratio6TM.get(zip));
-				}
-				continue;
-			}
+			
 			userInput.close();
 
 		}
