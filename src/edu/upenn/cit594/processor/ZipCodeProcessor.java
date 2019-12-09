@@ -2,6 +2,7 @@ package edu.upenn.cit594.processor;
 
 import java.util.*;
 
+import edu.upenn.cit594.data.Property;
 import edu.upenn.cit594.datamanagement.*;
 
 public class ZipCodeProcessor {
@@ -55,6 +56,7 @@ public class ZipCodeProcessor {
 		return totalPop;
 
 	}
+	
 
 	// main method below is for debugging/testing purpose
 //	public static void main(String[] args) {
