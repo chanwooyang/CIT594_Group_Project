@@ -7,6 +7,7 @@ import org.json.simple.*;
 import org.json.simple.parser.*;
 
 import edu.upenn.cit594.data.*;
+import edu.upenn.cit594.logging.Logger;
 
 public class JSONParkingViolationReader extends ParkingViolationReader{
 
@@ -23,6 +24,9 @@ public class JSONParkingViolationReader extends ParkingViolationReader{
 		
 		try {
 			JSONArray tickets = (JSONArray) parser.parse(new FileReader(fileName));
+			// whenever an input file is opened for reading, the program should "log it."
+			Logger lg = Logger.getInstance();
+			lg.log(lg.getTime() + " "  + fileName);
 			@SuppressWarnings("unchecked")
 			Iterator<JSONObject> iter = tickets.iterator();
 			

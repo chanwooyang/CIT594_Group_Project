@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 
 import edu.upenn.cit594.data.Property;
+import edu.upenn.cit594.logging.Logger;
 
 public class PropertyReader {
 
@@ -21,6 +22,9 @@ public class PropertyReader {
 		FileReader propertyFile;
 		try {
 			propertyFile = new FileReader(fileName);
+			// whenever an input file is opened for reading, the program should "log it."
+			Logger lg = Logger.getInstance();
+			lg.log(lg.getTime() + " "  + fileName);
 			@SuppressWarnings("resource")
 			Scanner sc = new Scanner(propertyFile);
 
@@ -53,7 +57,7 @@ public class PropertyReader {
 
 					double marketValue = Double.parseDouble(tokens[mvIndex]);
 					double totalLivableArea = Double.parseDouble(tokens[tlaIndex]);
-					int zipCode = Integer.parseInt(tokens[zcIndex].substring(0, 4));
+					int zipCode = Integer.parseInt(tokens[zcIndex].substring(0, 5));
 
 					Property property = new Property(zipCode, marketValue, totalLivableArea);
 
