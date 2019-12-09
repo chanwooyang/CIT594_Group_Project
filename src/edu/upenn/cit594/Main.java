@@ -1,16 +1,9 @@
 package edu.upenn.cit594;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Scanner;
-
-import edu.upenn.cit594.datamanagement.CSVParkingViolationReader;
-import edu.upenn.cit594.datamanagement.JSONParkingViolationReader;
-import edu.upenn.cit594.datamanagement.ParkingViolationReader;
 import edu.upenn.cit594.datamanagement.PropertyReader;
-import edu.upenn.cit594.datamanagement.ZipCodeReader;
 import edu.upenn.cit594.logging.Logger;
 import edu.upenn.cit594.processor.ParkingViolationProcessor;
 import edu.upenn.cit594.processor.PropertyProcessor;
@@ -37,7 +30,7 @@ public class Main {
 		lg.log(lg.getTime() + " " + args[0] + " " + args[1] + " "  + args[2] + " " + args[3] + " "  + args[4]);
 		
 		// exit, if format of parking violations file is not json or txt
-		String format = args[0].toLowerCase();
+		String format = args[0];
 		if (!format.equals("json") && !format.equals("csv")) {
 			System.out.println("Incorrect Parking Violations File Type. Not json or csv");
 			System.exit(0);
@@ -45,6 +38,7 @@ public class Main {
 		
 		// exit, if parking violations file cannot be used
 		String parkVioFileName = args[1];
+		// could also use the canRead() method.
 		try {
 			// whenever an input file is opened for reading, the program should "log it."
 			lg.log(lg.getTime() + " "  + parkVioFileName);
@@ -59,6 +53,7 @@ public class Main {
 
 		// exit, if property values file cannot be used
 		String propValFileName = args[2];
+		// could also use the canRead() method.
 		try {
 			// whenever an input file is opened for reading, the program should "log it."
 			lg.log(lg.getTime() + " "  + propValFileName);
@@ -73,6 +68,7 @@ public class Main {
 		
 		//exit, if population file cannot be used
 		String popFileName = args[3];
+		// could also use the canRead() method.
 		try {
 			// whenever an input file is opened for reading, the program should "log it."
 			lg.log(lg.getTime() + " "  + popFileName);
