@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 
 import edu.upenn.cit594.data.*;
+import edu.upenn.cit594.logging.Logger;
 
 public class CSVParkingViolationReader extends ParkingViolationReader {
 
@@ -19,6 +20,9 @@ public class CSVParkingViolationReader extends ParkingViolationReader {
 
 		try {
 			FileReader csv = new FileReader(fileName);
+			// whenever an input file is opened for reading, the program should "log it."
+			Logger lg = Logger.getInstance();
+			lg.log(lg.getTime() + " "  + fileName);
 			@SuppressWarnings("resource")
 			Scanner sc = new Scanner(csv);
 
