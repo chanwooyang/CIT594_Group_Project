@@ -144,7 +144,7 @@ public class ParkingViolationProcessor {
 			int avMV = pp.getAvMarketValue(zipCode);
 			double ratio = 0;
 			if (avMV != 0) {
-				ratio = entry.getValue() / avMV * 100000;
+				ratio = entry.getValue() / avMV * 1000000;
 			}
 			answerHM.put(zipCode, ratio);
 		}

@@ -31,13 +31,13 @@ public class ZipCodeProcessor {
 	 */
 	public int getTotalPopulationAllZip() {
 		int totalPop = 0;
-//		String fileName = this.fileName.split("\\.")[0];
+		String fileName = this.fileName.split("\\.")[0];
 		
-		if (totalPopulationMemo.containsKey("1")) {
-			totalPop = totalPopulationMemo.get("1");
+		if (totalPopulationMemo.containsKey(fileName)) {
+			totalPop = totalPopulationMemo.get(fileName);
 		} else {
 			totalPop = this.calculateTotalPopulationAllZip();
-			totalPopulationMemo.put("1", totalPop);
+			totalPopulationMemo.put(fileName, totalPop);
 		}
 
 		return totalPop;
