@@ -145,7 +145,7 @@ public class ParkingViolationProcessor {
 			double ratio = 0;
 			if (avMV != 0) {
 				ratio = entry.getValue() / avMV * 100000;
-			} 
+			}
 			answerHM.put(zipCode, ratio);
 		}
 		return answerHM;
@@ -153,17 +153,17 @@ public class ParkingViolationProcessor {
 	}
 
 	// main method below is for debugging/testing purpose
-	public static void main(String[] args) {
-		ParkingViolationProcessor p = new ParkingViolationProcessor("csv", "parking.csv");
-		List<ParkingViolation> pl = new ArrayList<ParkingViolation>();
-		ZipCodeProcessor zp = new ZipCodeProcessor("population.txt");
-		Map<Integer, Integer> zl = new HashMap<Integer, Integer>();
-		Map<Integer, Double> fpc = new HashMap<>();
-		zl = zp.process();
-		pl = p.getParkingViolationList();
-		fpc = p.getTotalFinesPerCapita(zl);
-		for (Integer zip : fpc.keySet()) {
-			System.out.format(zip + " %.4f\n", fpc.get(zip));
-		}
-	}
+//	public static void main(String[] args) {
+//		ParkingViolationProcessor p = new ParkingViolationProcessor("csv", "parking.csv");
+//		List<ParkingViolation> pl = new ArrayList<ParkingViolation>();
+//		ZipCodeProcessor zp = new ZipCodeProcessor("population.txt");
+//		Map<Integer, Integer> zl = new HashMap<Integer, Integer>();
+//		Map<Integer, Double> fpc = new HashMap<>();
+//		zl = zp.process();
+//		pl = p.getParkingViolationList();
+//		fpc = p.getTotalFinesPerCapita(zl);
+//		for (Integer zip : fpc.keySet()) {
+//			System.out.format(zip + " %.4f\n", fpc.get(zip));
+//		}
+//	}
 }

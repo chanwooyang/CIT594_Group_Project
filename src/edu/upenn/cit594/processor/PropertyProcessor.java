@@ -55,8 +55,8 @@ public class PropertyProcessor {
 	
 	private int actionHelper (int zipCode, AggregatorProperty attributeToSum) {
 		if (isValidZipCode(zipCode)) {
-			int attributeTotal = 0;
-			int count = 0;
+			double attributeTotal = 0;
+			double count = 0;
 			for (Property prop : allPropertiesAL) {
 				if (prop.getZipCode() == zipCode) {
 					attributeTotal += attributeToSum.getValue(prop);
@@ -67,7 +67,8 @@ public class PropertyProcessor {
 				return 0;
 			}
 			else {
-				return attributeTotal / count ;
+				double answer = attributeTotal / count ;
+				return (int) answer;
 			}
 		}
 		else {return 0;}

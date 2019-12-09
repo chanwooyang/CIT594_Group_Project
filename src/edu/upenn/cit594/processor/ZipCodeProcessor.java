@@ -2,7 +2,6 @@ package edu.upenn.cit594.processor;
 
 import java.util.*;
 
-import edu.upenn.cit594.data.Property;
 import edu.upenn.cit594.datamanagement.*;
 
 public class ZipCodeProcessor {
@@ -32,13 +31,13 @@ public class ZipCodeProcessor {
 	 */
 	public int getTotalPopulationAllZip() {
 		int totalPop = 0;
-		String fileName = this.fileName.split("\\.")[0];
+//		String fileName = this.fileName.split("\\.")[0];
 		
-		if (totalPopulationMemo.containsKey(fileName)) {
-			totalPop = totalPopulationMemo.get(fileName);
+		if (totalPopulationMemo.containsKey("1")) {
+			totalPop = totalPopulationMemo.get("1");
 		} else {
 			totalPop = this.calculateTotalPopulationAllZip();
-			totalPopulationMemo.put(fileName, totalPop);
+			totalPopulationMemo.put("1", totalPop);
 		}
 
 		return totalPop;
