@@ -4,8 +4,17 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
 
+import edu.upenn.cit594.datamanagement.CSVParkingViolationReader;
+import edu.upenn.cit594.datamanagement.JSONParkingViolationReader;
+import edu.upenn.cit594.datamanagement.ParkingViolationReader;
+import edu.upenn.cit594.datamanagement.PropertyReader;
+import edu.upenn.cit594.datamanagement.ZipCodeReader;
 import edu.upenn.cit594.logging.Logger;
+import edu.upenn.cit594.processor.ParkingViolationProcessor;
+import edu.upenn.cit594.processor.PropertyProcessor;
+import edu.upenn.cit594.processor.ZipCodeProcessor;
 import edu.upenn.cit594.ui.UserInterface;
 
 
@@ -19,6 +28,9 @@ public class Main {
 			System.out.println("Incorrect number of arguments");
 			System.exit(0);
 		}
+		
+		// set the name of the log file for Logger
+		setLogName(args[4]);
 		
 		// When the program starts, it should write the current time followed by the runtime arguments.
 		Logger lg = Logger.getInstance();
@@ -36,12 +48,13 @@ public class Main {
 		try {
 			// whenever an input file is opened for reading, the program should "log it."
 			lg.log(lg.getTime() + " "  + parkVioFileName);
-			BufferedReader br = new BufferedReader(new FileReader(parkVioFileName));
-			br.readLine();
-			br.close();
+			BufferedReader br1 = new BufferedReader(new FileReader(parkVioFileName));
+			br1.readLine();
+			br1.close();
 		} catch (IOException e) {
 			System.out.println("Could not find Parking Violations File or it is locked.");
 			e.printStackTrace();
+			System.exit(0);
 		}
 
 		// exit, if property values file cannot be used
@@ -49,12 +62,13 @@ public class Main {
 		try {
 			// whenever an input file is opened for reading, the program should "log it."
 			lg.log(lg.getTime() + " "  + propValFileName);
-			BufferedReader br = new BufferedReader(new FileReader(propValFileName));
-			br.readLine();
-			br.close();
+			BufferedReader br2 = new BufferedReader(new FileReader(propValFileName));
+			br2.readLine();
+			br2.close();
 		} catch (IOException e) {
 			System.out.println("Could not find Property Values File or it is locked.");
 			e.printStackTrace();
+			System.exit(0);
 		}
 		
 		//exit, if population file cannot be used
@@ -62,35 +76,34 @@ public class Main {
 		try {
 			// whenever an input file is opened for reading, the program should "log it."
 			lg.log(lg.getTime() + " "  + popFileName);
-			BufferedReader br  = new BufferedReader( new FileReader(popFileName));
-			br.readLine();
-			br.close();
+			BufferedReader br3  = new BufferedReader( new FileReader(popFileName));
+			br3.readLine();
+			br3.close();
 		} catch (IOException e) {
 			System.out.println("Could not find Population File or it is locked.");
 			e.printStackTrace();
+			System.exit(0);
 		}
 		
-		
-		// set the name of the log file for Logger
-		setLogName(args[4]);
 		
 		// running the program
 		
 		
+		// the ParkingViolationProcessor creates the ParkingViolationReaders!
+//		ParkingViolationReader rd = null;
+//		if (format.equals("csv")) {
+//			rd = new CSVParkingViolationReader(parkVioFileName);
+//		}
+//		else if (format.equals("json")) { 
+//			rd = new JSONParkingViolationReader(parkVioFileName);
+//		}
 		
-		ParkingViolationReader rd = null;
-		if (format.equals("csv")) {
-			rd = new CSVParkingViolationReader(parkVioFileName);
-		}
-		else if (format.equals("json")) { 
-			rd = new JSONParkingViolationReader(parkVioFileName);
-		}
+		// the ZipCodeProcessor creates the ZipCodeReader!
+//		ZipCodeReader popText = new ZipCodeReader (popFileName);
+		ZipCodeProcessor popProc = new ZipCodeProcessor(popFileName);
 		PropertyReader propCSV = new PropertyReader (propValFileName);
-		ZipCodeReader popText = new ZipCodeReader (popFileName);
-
-		ZipCodeProcessor popProc = new ZipCodeProcessor(popText);
 		PropertyProcessor propProc = new PropertyProcessor(propCSV);
-		ParkingViolationProcessor pvProc = new ParkingViolationProcessor(rd);
+		ParkingViolationProcessor pvProc = new ParkingViolationProcessor(format, parkVioFileName);
 		UserInterface ui = new UserInterface(popProc, propProc, pvProc);
 		
 		ui.promptUser();
