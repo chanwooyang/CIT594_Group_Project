@@ -84,14 +84,14 @@ public class PropertyReader {
 	}
 
 	// main method below is for debugging/testing purpose
-	public static void main(String[] args) {
-		List<Property> list = new ArrayList<Property>();
-		PropertyReader r = new PropertyReader("properties.csv");
-		list = r.read();
-
-		for (Property property : list) {
-			System.out.println(property.getZipCode() + " " + property.getMarketValue() + " " + property.getTotalLivableArea());
-		}
-	}
+//	public static void main(String[] args) {
+//		List<Property> list = new ArrayList<Property>();
+//		PropertyReader r = new PropertyReader("properties.csv");
+//		list = r.read();
+//
+//		for (Property property : list) {
+//			System.out.println(property.getZipCode() + " " + property.getMarketValue() + " " + property.getTotalLivableArea());
+//		}
+//	}
 
 }
